@@ -159,15 +159,15 @@
         }
 
         function populateD3jsChart() {
-    // Define the dimensions and margins of the graph
+    
     var chartWidth = 450,
         chartHeight = 450,
         chartMargin = 60;
 
-    // Determine the radius of the pie plot as half the width or half the height (whichever is smaller), subtracting a margin.
+    
     var chartRadius = Math.min(chartWidth, chartHeight) / 2 - chartMargin;
 
-    // Select the existing SVG if present, otherwise create a new one
+    
     var chartSvg = d3.select("#d3jsChart").selectAll("svg").data([null]);
 
     chartSvg = chartSvg.enter()
@@ -177,24 +177,24 @@
         .append("g")
         .attr("transform", "translate(" + chartWidth / 2 + "," + chartHeight / 2 + ")");
 
-    // Prepare dummy data
+    
     var budgetData = dataSource.myBudget;
 
-    // Set up the color scale
+    
     var colorScale = d3.scaleOrdinal().range([
         '#FF5733', '#33FF57', '#3366FF', '#9932CC', '#FFD700', '#8B4513', '#00FFFF', '#FF1493', '#2E8B57'
     ]);
 
-    // Define the pie chart layout
+    
     var pie = d3.pie().sort(null).value(function (d) { return d.value.budget; });
     var pieData = pie(d3.entries(budgetData));
 
-    // Define the arc generator
+    
     var arcGenerator = d3.arc()
         .innerRadius(chartRadius * 0.45)
         .outerRadius(chartRadius * 0.8);
 
-    // Build the pie chart by creating paths for each slice
+    
     chartSvg.selectAll('path')
         .data(pieData)
         .enter().append('path')
@@ -204,7 +204,7 @@
         .style("stroke-width", "2px")
         .style("opacity", 0.7);
 
-    // Add polylines connecting chart and labels
+    
     chartSvg.selectAll('polyline')
         .data(pieData)
         .enter().append('polyline')
@@ -212,15 +212,15 @@
         .style("fill", "none")
         .attr("stroke-width", 1)
         .attr('points', function (d) {
-            var startCoord = arcGenerator.centroid(d); // Line insertion in the slice
-            var endCoord = arcGenerator.centroid(d); // Line break, using the same arc generator
-            var labelCoord = arcGenerator.centroid(d); // Label position, nearly the same as endCoord
-            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2; // Angle for determining X position (right or left)
-            labelCoord[0] = chartRadius * 0.95 * (midangle < Math.PI ? 1 : -1); // Multiply by 1 or -1 to position on the right or left
+            var startCoord = arcGenerator.centroid(d); 
+            var endCoord = arcGenerator.centroid(d); 
+            var labelCoord = arcGenerator.centroid(d); 
+            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2; 
+            labelCoord[0] = chartRadius * 0.95 * (midangle < Math.PI ? 1 : -1); 
             return [startCoord, endCoord, labelCoord];
         });
 
-    // Add labels to the chart
+    
     chartSvg.selectAll('text')
         .data(pieData)
         .enter().append('text')

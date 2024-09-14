@@ -2,9 +2,9 @@
   "name": "personal-budget",
   "version": "1.0.0",
   "description": "The path to NGInx main folder: /usr/share/nginx/html",
-  "main": "_prepare_server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node _prepare_server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
